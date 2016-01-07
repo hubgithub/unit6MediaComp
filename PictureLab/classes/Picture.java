@@ -93,7 +93,8 @@ public class Picture extends SimplePicture
     {
       for (Pixel pixelObj : rowArray)
       {
-        pixelObj.setBlue(0);
+        pixelObj.setBlue(255);
+        pixelObj.setRed(0);
       }
     }
   }
@@ -223,7 +224,7 @@ public class Picture extends SimplePicture
    */
   public static void main(String[] args) 
   {
-    Picture beach = new Picture("beach.jpg");
+    Picture beach = new Picture("earth.jpg");
     beach.explore();
     beach.zeroBlue();
     beach.explore();
