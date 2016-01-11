@@ -119,6 +119,24 @@ public class Picture extends SimplePicture
     } 
   }
   
+  public void mirror_effect()
+  {
+    Pixel[][] pixels = getPixels2D();
+    
+    Pixel first = null;
+    Pixel second = null;
+    for(int row = 0; row < pixels.length;row++)
+    {
+        for(int col = 0; col < pixels[row].length/2;col++)
+        {
+            int mirrorcol = -col+pixels[row].length;
+            
+            pixels[row][mirrorcol].setColor(pixels[row][col].getColor());
+            pixels[row][col].setColor(pixels[row][mirrorcol].getColor());
+            
+        }
+    }
+  }
   /** Mirror just part of a picture of a temple */
   public void mirrorTemple()
   {
@@ -225,6 +243,7 @@ public class Picture extends SimplePicture
   public static void main(String[] args) 
   {
     Picture beach = new Picture("earth.jpg");
+    beach.mirror_effect();
     beach.explore();
     beach.zeroBlue();
     beach.explore();
