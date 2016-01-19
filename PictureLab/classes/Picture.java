@@ -119,7 +119,23 @@ public class Picture extends SimplePicture
     } 
   }
   
-  public void mirror_effect()
+  public void mirrorHor()
+  {
+      Pixel[][] pixels = this.getPixels2D();
+      
+      
+      for(int row = 0; row < pixels.length/2; row++)
+      {
+          for(int col = 0; col <pixels[row].length;col++)
+          {
+              
+              pixels[-row - 1+ pixels.length][col].setColor(pixels[row][col].getColor());
+            }
+        }
+      
+    }
+    
+  public void dia_effect()
   {
     Pixel[][] pixels = getPixels2D();
     
@@ -129,10 +145,14 @@ public class Picture extends SimplePicture
     {
         for(int col = 0; col < pixels[row].length/2;col++)
         {
-            int mirrorcol = -col+pixels[row].length;
+            int mirrorcol = -1-col+pixels[row].length;
+            int mirrorow = -1-row+pixels.length;
+            second = pixels[row][col];
+            first = pixels[mirrorow][mirrorcol];
+            pixels[mirrorow][mirrorcol].setColor(second.getColor());
+            pixels[row][col].setColor(first.getColor());
             
-            pixels[row][mirrorcol].setColor(pixels[row][col].getColor());
-            pixels[row][col].setColor(pixels[row][mirrorcol].getColor());
+            
             
         }
     }
@@ -236,14 +256,57 @@ public class Picture extends SimplePicture
     }
   }
   
+  public void fix_temple()
+  {
+      Pixel[][] pixels = this.getPixels2D();
+      for(int row = 0; row <= 70; row++)
+      {
+          for(int col = 0; col <= 190; col++)
+          {
+              
+              pixels[30+row][col+300].setColor(pixels[30+row][-col+250].getColor());
+            }
+        }
+    }
   
+  public void cropAndCopy( Picture sourcePicture, int startSourceRow, int endSourceRow, int startSourceCol, int endSourceCol,
+         int startDestRow, int startDestCol )
+  {
+      Pixel[][] source_pixels = sourcePicture.getPixels2D();
+      Pixel[][] pixels = this.getPixels2D();
+      int row = 0;
+      int col = 0;
+      
+      for(int souRow = startSourceRow; souRow <= endSourceRow; souRow++)
+      {
+          
+          for(int souCol = startSourceCol; souCol <= endSourceCol;souCol++)
+          {
+              
+              pixels[startDestRow+row][startDestCol+col].setColor(source_pixels[souRow][souCol].getColor());
+              
+              col++;
+         
+            }
+            row++;
+            col = 0;
+        }
+      
+      
+  }
+    
   /* Main method for testing - each class in Java can have a main 
    * method 
    */
   public static void main(String[] args) 
   {
-    Picture beach = new Picture("earth.jpg");
-    beach.mirror_effect();
+    Picture beach = new Picture("temple.jpg");
+    Picture earth = new Picture("earth.jpg");
+    //beach.mirrorHor();
+    //beach.mirror_effect();
+    //earth.dia_effect();
+    beach.cropAndCopy(earth,100,200,200,300,100,200);
+    //beach.fix_temple();
     beach.explore();
     beach.zeroBlue();
     beach.explore();

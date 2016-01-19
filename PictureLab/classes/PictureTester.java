@@ -50,7 +50,8 @@ public class PictureTester
     swan.edgeDetection(10);
     swan.explore();
   }
-  
+ 
+    
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)
