@@ -110,7 +110,7 @@ public class Picture extends SimplePicture
     int width = pixels[0].length;
     for (int row = 0; row < pixels.length; row++)
     {
-      for (int col = 0; col < width / 2; col++)
+      for (int col = 0; col < width; col++)
       {
         leftPixel = pixels[row][col];
         rightPixel = pixels[row][width - 1 - col];
@@ -294,22 +294,40 @@ public class Picture extends SimplePicture
       
       
   }
-    
+  
+  public static void collage(String[] args)
+  {
+      Picture base = new Picture(1000,1000);
+      Picture island = new Picture("coo_island_mod.jpg");
+      base.cropAndCopy(island,0,280,0,499,281,250);
+      
+      
+      base.explore();
+   }
   /* Main method for testing - each class in Java can have a main 
    * method 
    */
   public static void main(String[] args) 
   {
-    Picture beach = new Picture("temple.jpg");
-    Picture earth = new Picture("earth.jpg");
-    //beach.mirrorHor();
-    //beach.mirror_effect();
-    //earth.dia_effect();
-    beach.cropAndCopy(earth,100,200,200,300,100,200);
-    //beach.fix_temple();
-    beach.explore();
-    beach.zeroBlue();
-    beach.explore();
+      
+
   }
   
 } // this } is the end of class Picture, put all new methods before this
+
+   
+
+
+
+
+
+//     Picture beach = new Picture("temple.jpg");
+//     Picture earth = new Picture("earth.jpg");
+//     //beach.mirrorHor();
+//     //beach.mirror_effect();
+//     //earth.dia_effect();
+//     beach.cropAndCopy(earth,100,200,200,300,100,200);
+//     //beach.fix_temple();
+//     beach.explore();
+//     beach.zeroBlue();
+//     beach.explore();
