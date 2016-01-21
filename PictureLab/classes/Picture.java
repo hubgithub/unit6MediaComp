@@ -294,26 +294,6 @@ public class Picture extends SimplePicture
       
       
   }
-  public void mirror_upDown()
-  {
-      Pixel[][] pixels = this.getPixels2D();
-      
-      Pixel[][] cop = this.getPixels2D();
-
-      Pixel up = null;
-      Pixel down = null;
-      int t = pixels.length / 2;
-      for(int row = 0;row < t;row++)
-      {
-          for(int col = 0; col < pixels[0].length;col++)
-          {
-              
-              pixels[row][col].setColor(cop[pixels.length - row - 1][col].getColor());
-              pixels[pixels.length-row-1][col].setColor(cop[row][col].getColor());
-              
-            }
-        }
-    }
   
   public void filter1()
   {
@@ -328,18 +308,78 @@ public class Picture extends SimplePicture
     }
   }
   
-  public static void collage(String[] args)
+  public void gray()
   {
-      Picture base = new Picture(1000,1000);
+      Pixel[][] pixels = this.getPixels2D();
+      for (Pixel[] rowArray : pixels)
+    {
+      for (Pixel pixelObj : rowArray)
+      {
+        int blu = pixelObj.getBlue();
+        int gre = pixelObj.getGreen();
+        int red = pixelObj.getRed();
+        
+        int ave = blu + gre + red;
+        ave /= 3;
+        pixelObj.setBlue(ave);
+        pixelObj.setGreen(ave);
+        pixelObj.setRed(ave);
+        
+        
+      }
+    }
+    }
+  
+    public void darker()
+  {
+      Pixel[][] pixels = this.getPixels2D();
+      for (Pixel[] rowArray : pixels)
+    {
+      for (Pixel pixelObj : rowArray)
+      {
+        int blu = pixelObj.getBlue();
+        int gre = pixelObj.getGreen();
+        int red = pixelObj.getRed();
+        
+        pixelObj.setBlue(blu-50);
+        pixelObj.setGreen(gre-50);
+        pixelObj.setRed(red-50);
+        
+        
+      }
+    }
+    }
+    
+  public static void collage()
+  {
+      Picture base = new Picture(562,1000);
       Picture island = new Picture("coo_island_mod.jpg");
-      base.cropAndCopy(island,0,280,0,499,281,250);
-      island.filter1();
-      //island.mirror_upDown();
-      base.cropAndCopy(island,0,280,0,499,700,250);
+      base.cropAndCopy(island,0,280,0,499,0,0);
+
+      Picture island2 = new Picture("coo_island_mod.jpg");
+      island2.mirrorVertical();
       
+      base.cropAndCopy(island2,0,280,0,499,0,500);
+      
+      //################################################
+      base.mirrorHor(); // NEED !!!!!!!!!
+      //################################################
+
+      Picture island3 = new Picture("coo_island_mod.jpg");
+      
+      island3.cropAndCopy(base,280,560,0,499,0,0);
+      island3.gray();
+      base.cropAndCopy(island3,0,280,0,499,281,0);
+      
+      
+      Picture island4 = new Picture("coo_island_mod.jpg");
+      island4.cropAndCopy(base,281,560,500,999,0,0);
+      island4.darker();
+      base.cropAndCopy(island4,0,280,0,499,281,500);
       
       base.explore();
    }
+   
   /* Main method for testing - each class in Java can have a main 
    * method 
    */
