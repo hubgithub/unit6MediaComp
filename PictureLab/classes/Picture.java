@@ -294,12 +294,48 @@ public class Picture extends SimplePicture
       
       
   }
+  public void mirror_upDown()
+  {
+      Pixel[][] pixels = this.getPixels2D();
+      
+      Pixel[][] cop = this.getPixels2D();
+
+      Pixel up = null;
+      Pixel down = null;
+      int t = pixels.length / 2;
+      for(int row = 0;row < t;row++)
+      {
+          for(int col = 0; col < pixels[0].length;col++)
+          {
+              
+              pixels[row][col].setColor(cop[pixels.length - row - 1][col].getColor());
+              pixels[pixels.length-row-1][col].setColor(cop[row][col].getColor());
+              
+            }
+        }
+    }
+  
+  public void filter1()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    for (Pixel[] rowArray : pixels)
+    {
+      for (Pixel pixelObj : rowArray)
+      {
+        pixelObj.setBlue(190);
+        pixelObj.setGreen(190);
+      }
+    }
+  }
   
   public static void collage(String[] args)
   {
       Picture base = new Picture(1000,1000);
       Picture island = new Picture("coo_island_mod.jpg");
       base.cropAndCopy(island,0,280,0,499,281,250);
+      island.filter1();
+      //island.mirror_upDown();
+      base.cropAndCopy(island,0,280,0,499,700,250);
       
       
       base.explore();
@@ -311,23 +347,17 @@ public class Picture extends SimplePicture
   {
       
 
+    Picture beach = new Picture("temple.jpg");
+    Picture earth = new Picture("earth.jpg");
+    beach.mirrorHor();
+    //beach.mirror_effect();
+    earth.dia_effect();
+    beach.cropAndCopy(earth,100,200,200,300,100,200);
+    beach.fix_temple();
+    beach.explore();
+    beach.zeroBlue();
+    beach.explore();
+
   }
   
 } // this } is the end of class Picture, put all new methods before this
-
-   
-
-
-
-
-
-//     Picture beach = new Picture("temple.jpg");
-//     Picture earth = new Picture("earth.jpg");
-//     //beach.mirrorHor();
-//     //beach.mirror_effect();
-//     //earth.dia_effect();
-//     beach.cropAndCopy(earth,100,200,200,300,100,200);
-//     //beach.fix_temple();
-//     beach.explore();
-//     beach.zeroBlue();
-//     beach.explore();
