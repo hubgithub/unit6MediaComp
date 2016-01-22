@@ -341,15 +341,38 @@ public class Picture extends SimplePicture
         int gre = pixelObj.getGreen();
         int red = pixelObj.getRed();
         
-        pixelObj.setBlue(blu-50);
-        pixelObj.setGreen(gre-50);
-        pixelObj.setRed(red-50);
+        blu += 150;
+        gre -= 100;
+        red += 70;
+        pixelObj.setBlue(blu);
+        pixelObj.setGreen(gre);
+        pixelObj.setRed(red);
         
         
       }
     }
     }
-    
+  public void filter_last()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+      for (Pixel[] rowArray : pixels)
+    {
+      for (Pixel pixelObj : rowArray)
+      {
+        int blu = pixelObj.getBlue();
+        int gre = pixelObj.getGreen();
+        int red = pixelObj.getRed();
+        if(gre > (blu + 20) && gre > (red + 20))
+        {
+            pixelObj.setRed(red+50);
+            pixelObj.setGreen(0);
+            pixelObj.setBlue(blu-40);
+            
+        }
+        
+      }
+    }
+    }
   public static void collage()
   {
       Picture base = new Picture(562,1000);
@@ -358,13 +381,16 @@ public class Picture extends SimplePicture
 
       Picture island2 = new Picture("coo_island_mod.jpg");
       island2.mirrorVertical();
-      
       base.cropAndCopy(island2,0,280,0,499,0,500);
       
       //################################################
       base.mirrorHor(); // NEED !!!!!!!!!
       //################################################
-
+      
+      island2.filter_last();
+      base.cropAndCopy(island2,0,280,0,499,0,500);
+      
+      
       Picture island3 = new Picture("coo_island_mod.jpg");
       
       island3.cropAndCopy(base,280,560,0,499,0,0);
