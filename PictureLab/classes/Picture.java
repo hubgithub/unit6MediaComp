@@ -310,7 +310,8 @@ public class Picture extends SimplePicture
   
   public void gray()
   {
-      Pixel[][] pixels = this.getPixels2D();
+    //Gray!!
+    Pixel[][] pixels = this.getPixels2D();
       for (Pixel[] rowArray : pixels)
     {
       for (Pixel pixelObj : rowArray)
@@ -332,7 +333,8 @@ public class Picture extends SimplePicture
   
     public void darker()
   {
-      Pixel[][] pixels = this.getPixels2D();
+    // Making whole image looks like purple!
+    Pixel[][] pixels = this.getPixels2D();
       for (Pixel[] rowArray : pixels)
     {
       for (Pixel pixelObj : rowArray)
@@ -354,6 +356,7 @@ public class Picture extends SimplePicture
     }
   public void filter_last()
   {
+    // island2 filter, change the trees' color
     Pixel[][] pixels = this.getPixels2D();
       for (Pixel[] rowArray : pixels)
     {
@@ -373,8 +376,10 @@ public class Picture extends SimplePicture
       }
     }
     }
+    
   public static void collage()
   {
+      //Collage main method
       Picture base = new Picture(562,1000);
       Picture island = new Picture("coo_island_mod.jpg");
       base.cropAndCopy(island,0,280,0,499,0,0);
